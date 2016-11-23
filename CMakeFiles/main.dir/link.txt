@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++14 -Wall -Wextra -Wall -Wextra -Wpedantic -Wcast-align -Wmissing-declarations -Wredundant-decls -Wuninitialized -Wconversion -Wno-unused-parameter   CMakeFiles/main.dir/main.cpp.o  -o main -rdynamic -lboost_system -lboost_filesystem -ldl -lsfml-system -lsfml-window -lsfml-graphics -lsfml-network -lsfml-audio 
