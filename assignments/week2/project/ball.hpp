@@ -1,5 +1,6 @@
 #pragma once
 
+#include "drawable.hpp"
 #include <SFML/Graphics.hpp>
 
 class ball : public drawable {
@@ -8,6 +9,7 @@ private:
   float size;
 
 public:
-  ball(sf::Vector2f position, float size);
-  void draw() const;
+  ball(sf::Vector2f position, float size = 30.0);
+  void draw(sf::RenderWindow &window) const;
+  // void updatePosition();
 };
