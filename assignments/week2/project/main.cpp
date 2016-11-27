@@ -23,9 +23,16 @@ int main() {
       action(sf::Keyboard::Up, [&] { testBall.move(sf::Vector2f(0.0, -1.0)); }),
       action(sf::Keyboard::Down,
              [&] { testBall.move(sf::Vector2f(0.0, 1.0)); }),
-      action(sf::Mouse::Left, [&] {
-        testBall.jump(Vector2fFromVector2i(sf::Mouse::getPosition(window)));
-      })};
+      action(sf::Mouse::Left,
+             [&] {
+               testBall.jump(
+                   Vector2fFromVector2i(sf::Mouse::getPosition(window)));
+             }),
+      action([&] { testBall.updatePosition(); }),
+      action(upperWall, testBall, [&] { testBall.bounce(1.0); }),
+      action(rightWall, testBall, [&] { testBall.bounce(-1.0); }),
+      action(lowerWall, testBall, [&] { testBall.bounce(1.0); }),
+      action(leftWall, testBall, [&] { testBall.bounce(-1.0); })};
 
   window.clear();
   testBall.draw(window);

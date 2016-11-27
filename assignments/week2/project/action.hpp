@@ -1,7 +1,10 @@
 #pragma once
 
+#include "ball.hpp"
+#include "wall.hpp"
 #include <SFML/Graphics.hpp>
 #include <functional>
+#include <iostream>
 
 class action {
 private:
@@ -20,6 +23,15 @@ public:
       : condition(
             [button]() -> bool { return sf::Mouse::isButtonPressed(button); }),
         work(work) {}
+
+  action(wall w, ball b, std::function<void()> work)
+      : condition([w, b]() -> bool {
+          return b.getBounds().intersects(w.getBounds());
+        }),
+        work(work) {}
+
+  action(std::function<void()> work)
+      : condition([]() -> bool { return true; }), work(work) {}
 
   void operator()() {
     if (condition()) {
