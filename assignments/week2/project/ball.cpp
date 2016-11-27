@@ -10,6 +10,10 @@ void ball::draw(sf::RenderWindow &window) const {
   window.draw(circle);
 }
 
+void ball::move(sf::Vector2f difference) { position += difference; }
+void ball::jump(sf::Vector2f target) {
+  position = sf::Vector2f{target.x - size, target.y - size};
+}
 // void ball::updatePosition(){
 //
 // }
