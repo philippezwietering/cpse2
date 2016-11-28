@@ -17,7 +17,6 @@ void ball::jump(sf::Vector2f target) {
 }
 
 void ball::bounce(float direction) {
-  std::cout << "Bounced";
   velocity = sf::Vector2f{direction * velocity.x, -direction * velocity.y};
 }
 void ball::updatePosition() { circle.move(velocity); }
