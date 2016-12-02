@@ -161,6 +161,33 @@ ball.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/ball.cpp.s
 .PHONY : ball.cpp.s
 
+block.o: block.cpp.o
+
+.PHONY : block.o
+
+# target to build an object file
+block.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/block.cpp.o
+.PHONY : block.cpp.o
+
+block.i: block.cpp.i
+
+.PHONY : block.i
+
+# target to preprocess a source file
+block.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/block.cpp.i
+.PHONY : block.cpp.i
+
+block.s: block.cpp.s
+
+.PHONY : block.s
+
+# target to generate assembly for a file
+block.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/block.cpp.s
+.PHONY : block.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -228,6 +255,9 @@ help:
 	@echo "... ball.o"
 	@echo "... ball.i"
 	@echo "... ball.s"
+	@echo "... block.o"
+	@echo "... block.i"
+	@echo "... block.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

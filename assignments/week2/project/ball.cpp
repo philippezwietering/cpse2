@@ -5,6 +5,7 @@ ball::ball(sf::Vector2f position, float size)
     : circle(), velocity(sf::Vector2f{0.0, 0.0}) {
   circle.setRadius(size);
   circle.setPosition(position);
+  circle.setFillColor(sf::Color::Magenta);
 }
 
 void ball::draw(sf::RenderWindow &window) const { window.draw(circle); }
@@ -19,6 +20,9 @@ void ball::jump(sf::Vector2f target) {
 void ball::bounce(float direction) {
   velocity = sf::Vector2f{direction * velocity.x, -direction * velocity.y};
 }
+
 void ball::updatePosition() { circle.move(velocity); }
 
 sf::FloatRect ball::getBounds() const { return circle.getGlobalBounds(); }
+
+sf::Vector2f ball::getVelocity() const { return velocity; }

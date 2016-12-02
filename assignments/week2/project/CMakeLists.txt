@@ -36,7 +36,9 @@ set(sources
     project/drawable.hpp
     project/wall.hpp
     project/wall.cpp
-    project/action.hpp)
+    project/action.hpp
+    project/block.hpp
+    project/block.cpp)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 find_package(Boost REQUIRED COMPONENTS system filesystem)
