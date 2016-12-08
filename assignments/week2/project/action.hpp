@@ -25,11 +25,11 @@ public:
             [button]() -> bool { return sf::Mouse::isButtonPressed(button); }),
         work(work) {}
 
-  // action(wall &w, ball &b, std::function<void()> work)
-  //     : condition([&w, &b]() -> bool {
-  //         return b.getBounds().intersects(w.getBounds());
-  //       }),
-  //       work(work) {}
+  action(wall &w, ball &b, std::function<void()> work)
+      : condition([&w, &b]() -> bool {
+          return b.getBounds().intersects(w.getBounds());
+        }),
+        work(work) {}
 
   // action(ball &b, block &blok, std::function<void()> work)
   //     : condition([&b, &blok]() -> bool {
