@@ -31,14 +31,18 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(sources
     # Main source.
     project/main.cpp
-    project/ball.cpp
-    project/ball.hpp
+    project/circle.hpp
+    project/circle.cpp
+    project/rectangle.hpp
+    project/rectangle.cpp
     project/drawable.hpp
-    project/wall.hpp
-    project/wall.cpp
     project/action.hpp
-    project/block.hpp
-    project/block.cpp)
+    project/line.hpp
+    project/line.cpp
+    project/picture.cpp
+    project/picture.hpp
+    project/exception.hpp
+    project/troll.png)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 find_package(Boost REQUIRED COMPONENTS system filesystem)

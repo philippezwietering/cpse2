@@ -1,0 +1,4 @@
+(50,60) CIRCLE blue 10
+(10, 10) RECTANGLE red (30, 40)
+(110, 50) PICTURE project/troll.png
+(200, 200) LINE green (300, 250)
