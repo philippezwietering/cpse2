@@ -42,7 +42,8 @@ set(sources
     project/picture.cpp
     project/picture.hpp
     project/exception.hpp
-    project/troll.png)
+    project/troll.png
+    project/color.hpp)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 find_package(Boost REQUIRED COMPONENTS system filesystem)

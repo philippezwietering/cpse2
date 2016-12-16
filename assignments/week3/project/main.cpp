@@ -1,5 +1,6 @@
 #include "action.hpp"
 #include "circle.hpp"
+#include "color.hpp"
 #include "exception.hpp"
 #include "line.hpp"
 #include "picture.hpp"
@@ -39,13 +40,6 @@ std::ifstream &operator>>(std::ifstream &input, sf::Vector2f &rhs) {
 std::ifstream &operator>>(std::ifstream &input, sf::Color &rhs) {
   std::string s;
   input >> s;
-  const struct {
-    const char *name;
-    sf::Color color;
-  } colors[]{{"yellow", sf::Color::Yellow}, {"red", sf::Color::Red},
-             {"blue", sf::Color::Blue},     {"green", sf::Color::Green},
-             {"black", sf::Color::Black},   {"cyan", sf::Color::Cyan},
-             {"white", sf::Color::White}};
   for (auto const &color : colors) {
     if (color.name == s) {
       rhs = color.color;
@@ -92,50 +86,64 @@ drawable *read_drawable(std::ifstream &input) {
 
 int main() {
   sf::RenderWindow window{sf::VideoMode{1000, 720}, "SFML Window"};
-  std::ifstream input("project/objects.txt");
+  std::ifstream input("project/objectOutput.txt");
   std::list<drawable *> drawables;
+  bool madeit = false;
   try {
-    while (true) {
-      drawables.push_back(read_drawable(input));
+    try {
+      while (true) {
+        drawables.push_back(read_drawable(input));
+      }
+    } catch (end_of_file) {
+      madeit = true;
     }
-  } catch (end_of_file) {
-  } catch (const std::exception &e) {
+    drawable *moveableDrawable = nullptr;
+    action actions[] = {
+        action(sf::Keyboard::Left,
+               [&] { moveableDrawable->move(sf::Vector2f(-1.0, 0.0)); }),
+        action(sf::Keyboard::Right,
+               [&] { moveableDrawable->move(sf::Vector2f(1.0, 0.0)); }),
+        action(sf::Keyboard::Up,
+               [&] { moveableDrawable->move(sf::Vector2f(0.0, -1.0)); }),
+        action(sf::Keyboard::Down,
+               [&] { moveableDrawable->move(sf::Vector2f(0.0, 1.0)); })};
+
+    while (window.isOpen()) {
+      for (auto &action : actions) {
+        if (moveableDrawable) {
+          action();
+        }
+      }
+      window.clear();
+      for (auto d : drawables) {
+        d->draw(window);
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
+            d->getBounds().contains(
+                Vector2fFromVector2i(sf::Mouse::getPosition(window)))) {
+          moveableDrawable = d;
+        }
+      }
+
+      window.display();
+      sf::sleep(sf::milliseconds(20));
+
+      sf::Event event;
+      while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+          if (madeit) {
+            std::ofstream output("project/objectOutput.txt");
+            for (auto d : drawables) {
+              d->write(output);
+            }
+          }
+          window.close();
+        }
+      }
+    }
+  } catch (std::exception &e) {
     std::cout << e.what();
-  }
-  drawable *moveableDrawable = nullptr;
-  action actions[] = {
-      action(sf::Keyboard::Left,
-             [&] { moveableDrawable->move(sf::Vector2f(-1.0, 0.0)); }),
-      action(sf::Keyboard::Right,
-             [&] { moveableDrawable->move(sf::Vector2f(1.0, 0.0)); }),
-      action(sf::Keyboard::Up,
-             [&] { moveableDrawable->move(sf::Vector2f(0.0, -1.0)); }),
-      action(sf::Keyboard::Down,
-             [&] { moveableDrawable->move(sf::Vector2f(0.0, 1.0)); })};
-  while (window.isOpen()) {
-
-    for (auto &action : actions) {
-      if (moveableDrawable) {
-        action();
-      }
-    }
-    window.clear();
-    for (auto d : drawables) {
-      d->draw(window);
-      if (sf::Mouse::isButtonPressed(sf::Mouse::Left) &&
-          d->getBounds().contains(
-              Vector2fFromVector2i(sf::Mouse::getPosition(window)))) {
-        moveableDrawable = d;
-      }
-    }
-    window.display();
-    sf::sleep(sf::milliseconds(20));
-
-    sf::Event event;
-    while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
-        window.close();
-      }
-    }
+  } catch (...) {
+    std::cout << "You have done something terribly wrong. Turn back now or "
+                 "face the consequences!\n";
   }
 }

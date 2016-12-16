@@ -1,10 +1,12 @@
 #include "picture.hpp"
 #include "exception.hpp"
+#include <fstream>
+#include <iostream>
 
 picture::picture(sf::Vector2f position, std::string filename)
-    : pic(), tex(), moveable(false) {
+    : pic(), tex(), filename(filename) {
   if (!tex.loadFromFile(filename)) {
-    throw no_such_file(__FILE__, __LINE__);
+    throw no_such_file(filename);
   } else {
     tex.setSmooth(true);
     tex.setRepeated(false);
@@ -21,6 +23,12 @@ void picture::move(sf::Vector2f target) { pic.move(target); }
 
 sf::FloatRect picture::getBounds() const { return pic.getGlobalBounds(); }
 
-void picture::setMoveable(bool m) { moveable = m; }
-
-bool picture::isMoveable() const { return moveable; }
+void picture::write(std::ofstream &output) {
+  output << "(";
+  output << pic.getPosition().x;
+  output << ",";
+  output << pic.getPosition().y;
+  output << ") PICTURE ";
+  output << filename;
+  output << "\n";
+}

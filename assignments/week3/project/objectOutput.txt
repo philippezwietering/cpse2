@@ -1,0 +1,4 @@
+(87,61) CIRCLE blue 10
+(427,310) RECTANGLE red (50,80)
+(447,68) PICTURE project/troll.png
+(291,245) LINE green (391,295)
