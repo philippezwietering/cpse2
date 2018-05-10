@@ -5,6 +5,8 @@
 #include <fstream>
 #include <functional>
 #include <iostream>
+#include <map>
+#include <string>
 #include <vector>
 
 std::vector<char> readCharsFromFile(std::ifstream &input) {
@@ -42,6 +44,22 @@ T find_or_throw(T begin, T end, const V &value) {
   return found;
 }
 
+struct charFrequency {
+  int frequency;
+  char c;
+};
+struct stringFrequency {
+  int frequency;
+  std::string s;
+};
+
+bool sortFrequency(charFrequency i, charFrequency j) {
+  return i.frequency > j.frequency;
+}
+bool sortWordFrequency(stringFrequency i, stringFrequency j) {
+  return i.frequency > j.frequency;
+}
+
 int main() {
   std::vector<char> charVector;
   std::ifstream input("bible.txt");
@@ -71,6 +89,48 @@ int main() {
   for (auto a : charArray) {
     std::cout << char('a' + alphaCount) << ": " << a << "\n";
     alphaCount++;
+  }
+
+  std::array<charFrequency, 26> frequencyArray;
+  int iter = 0;
+  for (auto i : charArray) {
+    frequencyArray[iter].c = 'a' + iter;
+    frequencyArray[iter].frequency = i;
+    iter++;
+  }
+  std::cout << "\nNow sorted on frequency:\n";
+  std::sort(frequencyArray.begin(), frequencyArray.end(), sortFrequency);
+  for (auto a : frequencyArray) {
+    std::cout << char(a.c) << ": " << a.frequency << "\n";
+  }
+
+  std::map<std::string, int> wordMap;
+  auto word = std::string();
+
+  for (int i = 0; i < charVector.size(); i++) {
+    if (isalpha(charVector[i])) {
+      word = char(charVector[i]);
+      i++;
+      while (isalpha(charVector[i])) {
+        word.push_back(char(charVector[i]));
+        i++;
+      }
+      if (wordMap.find(word) != wordMap.end()) {
+        (wordMap.find(word)->second)++;
+      } else {
+        wordMap[word] = 1;
+      }
+    }
+  }
+
+  std::vector<stringFrequency> wordVector;
+  for (auto a : wordMap) {
+    wordVector.push_back(stringFrequency{a.second, a.first});
+  }
+  std::sort(wordVector.begin(), wordVector.end(), sortWordFrequency);
+  std::cout << "\nWords:\n";
+  for (auto a : wordVector) {
+    std::cout << a.s << ": " << a.frequency << "\n";
   }
 
   // for (auto a : charVector) {

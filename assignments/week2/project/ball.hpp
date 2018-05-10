@@ -16,4 +16,5 @@ public:
   void jump(sf::Vector2f target);
   sf::FloatRect getBounds() const;
   void updatePosition();
+  sf::Vector2f getVelocity() const;
 };
