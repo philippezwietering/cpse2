@@ -10,10 +10,10 @@ class Game{
 private:
     std::vector<std::shared_ptr<Turn>> turns;
     void drawSFMLTurn();
-    void drawTextTurn();
+    void drawTextBoard();
     void undoTurn();
     bool detectWin();
-    void handleInput();
+    void handleTextInput();
 
 public:
     Game(){

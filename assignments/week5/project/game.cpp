@@ -4,7 +4,11 @@ void Game::undoTurn(){
     turns.pop_back();
 }
 
-void Game::drawTextTurn(){
+void Game::drawSFMLTurn(){
+    return;
+}
+
+void Game::drawTextBoard(){
     bool cellEmpty = true;
     std::cout << "|-----|" << std::endl;
     for(int i = 0; i < 3; ++i){
@@ -28,6 +32,7 @@ void Game::drawTextTurn(){
 
 bool Game::detectWin(){
     if(turns.size() < 3){ return false; }
+
     bool lastO = turns.back()->getO();
     int numberInRow = 0;
 
@@ -86,33 +91,47 @@ bool Game::detectWin(){
 }
 
 void Game::runText(){
-    drawTextTurn();
+    drawTextBoard();
     while(!detectWin()){
         if(turns.size() > 8){
-            std::cout << "DRAW" << std::endl;
+            std::cout << "DRAW!" << std::endl;
             return;
         } else{
-            handleInput();
-            drawTextTurn();
+            handleTextInput();
+            drawTextBoard();
         }
     }
     std::cout << (turns.back()->getO() ? "o" : "x") << " won!!! You're the cool kid now!" << std::endl;
 }
 
 void Game::runSFML(){
-    drawSFMLTurn();
-    while(!detectWin()){
-        if(turns.size() > 8){
-            std::cout << "DRAW" << std::endl;
-            return;
-        } else{
-            handleInput();
-            drawSFMLTurn();
+    sf::Window mainWindow(sf::VideoMode(500, 500), "Tic Tac Toe", sf::Style::Titlebar | sf::Style::Close);
+    mainWindow.setFramerateLimit(60);
+
+    while(mainWindow.isOpen()){
+
+        sf::Event event;
+        while(mainWindow.pollEvent(event)){
+            if(event.type == sf::Event::Closed){
+                mainWindow.close();
+            }
+
+            // drawSFMLTurn();
+            // while(!detectWin()){
+            //     if(turns.size() > 8){
+            //         std::cout << "DRAW" << std::endl;
+            //         return;
+            //     } else{
+            //         //handleInput();
+            //         drawSFMLTurn();
+            //     }
+            // }
+            // std::cout << (turns.back()->getO() ? "o" : "x") << " won!!! You're the cool kid now!" << std::endl;
         }
     }
 }
 
-void Game::handleInput(){
+void Game::handleTextInput(){
     int x, y;
     std::cout << "Put in x-coördinate: ";
     std::cin >> x;
@@ -121,12 +140,17 @@ void Game::handleInput(){
 
     if(x < 0){x = 0;}   if(x > 2){x = 2;}
     if(y < 0){y = 0;}   if(y > 2){y = 2;}
-    //auto t = textInputFactory(input);
 
-    if(!turns.empty() && turns.back()->getX() == x && turns.back()->getY() == y){
-        std::cout << "That space is already taken!" << std::endl;
-        handleInput();
-        return;
+    if(!turns.empty()){
+        bool taken = false;
+        for(auto obj: turns){
+            if(obj->getX() == x && obj->getY() == y){
+                taken = true;
+                std::cout << "The space " << *obj  << " is already taken!" << '\n';
+                handleTextInput();
+                return;
+            }
+        }
     }
 
     bool lastO;

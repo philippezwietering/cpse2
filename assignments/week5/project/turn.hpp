@@ -1,6 +1,8 @@
 #pragma once
 
-class Turn{
+#include <iostream>
+
+struct Turn{
 private:
     int x;
     int y;
@@ -10,4 +12,10 @@ public:
     int getX(){ return x; }
     int getY(){ return y; }
     bool getO(){ return o; }
+    friend std::ostream &operator<<(std::ostream &os, const Turn t){
+    	os << '(' << t.x << ", " << t.y << ", " << (t.o ? "O" : "X") << ')';
+		return os;
+    }
 };
+
+
