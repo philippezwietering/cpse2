@@ -31,7 +31,9 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(sources
     # Main source.
     project/main.cpp
-	project/game.cpp
+	  project/game.cpp
+    project/block.cpp
+    project/picture.cpp
 )
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

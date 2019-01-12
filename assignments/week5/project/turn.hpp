@@ -14,8 +14,6 @@ public:
     bool getO(){ return o; }
     friend std::ostream &operator<<(std::ostream &os, const Turn t){
     	os << '(' << t.x << ", " << t.y << ", " << (t.o ? "O" : "X") << ')';
-		return os;
+		  return os;
     }
 };
-
-

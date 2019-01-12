@@ -4,10 +4,6 @@ void Game::undoTurn(){
     turns.pop_back();
 }
 
-void Game::drawSFMLTurn(){
-    return;
-}
-
 void Game::drawTextBoard(){
     bool cellEmpty = true;
     std::cout << "|-----------|" << std::endl;
@@ -132,11 +128,23 @@ void Game::runSFML(){
 }
 
 void Game::handleTextInput(){
+    std::string input;
+    std::cout << "Put in x-coordinate or undo:\n";
+    std::cin >> input;
+
+    if(input == "undo" || input == "u"){
+      if(turns.empty()){
+        return;
+      }
+      undoTurn();
+      return;
+    }
+
     int x, y;
-    std::cout << "Put in x-coördinate: ";
-    std::cin >> x;
-    std::cout << "Put in y-coördinate: ";
-    std::cin >> y;
+    x = std::stoi(input);
+    std::cout << "Put in y-coordinate:\n";
+    std::cin >> input;
+    y = std::stoi(input);
 
     if(x < 0){x = 0;}   if(x > 2){x = 2;}
     if(y < 0){y = 0;}   if(y > 2){y = 2;}
@@ -160,4 +168,5 @@ void Game::handleTextInput(){
         lastO = !turns.back()->getO();
     }
     turns.push_back(std::make_shared<Turn>(Turn(x, y, lastO)));
+
 }

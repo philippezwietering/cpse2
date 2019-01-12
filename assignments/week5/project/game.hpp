@@ -5,11 +5,12 @@
 #include <iostream>
 #include <memory>
 #include "turn.hpp"
+#include "block.hpp"
+#include "picture.hpp"
 
 class Game{
 private:
     std::vector<std::shared_ptr<Turn>> turns;
-    void drawSFMLTurn();
     void drawTextBoard();
     void undoTurn();
     bool detectWin();
@@ -21,5 +22,5 @@ public:
     }
     void runSFML();
     void runText();
-    
+
 };
