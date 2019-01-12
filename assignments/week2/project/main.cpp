@@ -42,7 +42,7 @@ int main() {
                testBlock.jump(
                    Vector2fFromVector2i(sf::Mouse::getPosition(window)));
              }),
-      action([&] { testBall.updatePosition(); }), action([&] {
+      action([&] {
         auto fx =
             sf::FloatRect(testBall.getBounds().left + testBall.getVelocity().x,
                           testBall.getBounds().top, testBall.getBounds().width,
@@ -60,7 +60,8 @@ int main() {
             testBall.bounce(-1.0);
           }
         }
-      })};
+      }),
+      action([&] { testBall.updatePosition(); })};
 
   window.clear();
   testBall.draw(window);
