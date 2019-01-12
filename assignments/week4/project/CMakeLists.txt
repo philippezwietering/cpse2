@@ -40,4 +40,4 @@ find_package(Boost REQUIRED COMPONENTS system filesystem)
 find_package(SFML 2 REQUIRED system window graphics network audio)
 
 add_executable(${EXE} ${sources})
-target_link_libraries(${EXE} ${Boost_LIBRARIES} dl ${SFML_LIBRARIES})
+target_link_libraries(${EXE} ${Boost_LIBRARIES})
