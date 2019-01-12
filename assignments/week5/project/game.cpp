@@ -10,7 +10,7 @@ void Game::drawSFMLTurn(){
 
 void Game::drawTextBoard(){
     bool cellEmpty = true;
-    std::cout << "|-----|" << std::endl;
+    std::cout << "|-----------|" << std::endl;
     for(int i = 0; i < 3; ++i){
         for(int j = 0; j < 3; ++j){
             cellEmpty = true;
@@ -18,15 +18,15 @@ void Game::drawTextBoard(){
             for(auto obj : turns){
                 if(i == obj->getX() && j == obj->getY()){
                     cellEmpty = false;
-                    std::cout << (obj->getO() ? "o" : "x");
+                    std::cout << (obj->getO() ? " o " : " x ");
                     break;
                 }
             }
             if(cellEmpty){
-                std::cout << " ";
+                std::cout << "   ";
             }
         }
-        std::cout << "|" << std::endl << "|-----|" << std::endl;
+        std::cout << "|" << std::endl << "|-----------|" << std::endl;
     }
 }
 
