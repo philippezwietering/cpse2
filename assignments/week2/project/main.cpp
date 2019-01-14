@@ -10,6 +10,8 @@ sf::Vector2f Vector2fFromVector2i(sf::Vector2i rhs) {
 
 int main() {
   sf::RenderWindow window{sf::VideoMode{1000, 720}, "SFML Window"};
+  window.setFramerateLimit(60);
+
   ball testBall{sf::Vector2f{320.0, 240.0}};
   wall upperWall{sf::Vector2f{0.0, 0.0}, sf::Vector2f{990.0, 10.0}};
   wall *puw = &upperWall;
@@ -34,6 +36,7 @@ int main() {
              [&] { testBall.move(sf::Vector2f(0.0, 1.0)); }),
       action(sf::Mouse::Left,
              [&] {
+               testBall.move(sf::Vector2f(-1*testBall.getVelocity().x, -1*testBall.getVelocity().y));
                testBall.jump(
                    Vector2fFromVector2i(sf::Mouse::getPosition(window)));
              }),
@@ -63,15 +66,6 @@ int main() {
       }),
       action([&] { testBall.updatePosition(); })};
 
-  window.clear();
-  testBall.draw(window);
-  upperWall.draw(window);
-  rightWall.draw(window);
-  lowerWall.draw(window);
-  leftWall.draw(window);
-  testBlock.draw(window);
-  window.display();
-
   while (window.isOpen()) {
     for (auto &action : actions) {
       action();
@@ -79,11 +73,9 @@ int main() {
 
     window.clear();
     testBall.draw(window);
-    upperWall.draw(window);
-    rightWall.draw(window);
-    lowerWall.draw(window);
-    leftWall.draw(window);
-    testBlock.draw(window);
+    for(auto obj : objectList){
+      obj->draw(window);
+    }
     window.display();
 
     sf::sleep(sf::milliseconds(20));
