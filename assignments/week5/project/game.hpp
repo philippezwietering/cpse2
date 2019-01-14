@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <memory>
+#include <list>
 #include "turn.hpp"
 #include "block.hpp"
 #include "picture.hpp"
@@ -11,6 +12,7 @@
 class Game{
 private:
     std::vector<std::shared_ptr<Turn>> turns;
+
     void drawTextBoard();
     void undoTurn();
     bool detectWin();
