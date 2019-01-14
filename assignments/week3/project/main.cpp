@@ -134,6 +134,7 @@ int main() {
             std::ofstream output("project/objectOutput.txt");
             for (auto d : drawables) {
               d->write(output);
+              delete d;
             }
           }
           window.close();
